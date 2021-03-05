@@ -2,26 +2,19 @@
     <app-layout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Edit Todo
+                View Todo
             </h2>
         </template>
         <JetAuthenticationCard>
             <form class="mx-auto" @submit.prevent="update">
                 <div>
-                    <jet-label for="title" value="Title" />
-                    <jet-input
-                        id="title"
-                        type="title"
-                        class="shadow appearance-none border rounded py-2 px-3 text-grey-darker"
-                        v-model="form.title"
-                        autofocus
-                        :error="form.errors.title"
-                    />
+                    Title:
+                    <jet-label for="title" :value="form.title" />
                 </div>
-                <p class="text-red-800">{{ form.errors.title }}</p>
                 <div class="block mt-4">
                     <label class="flex items-center">
                         <jet-checkbox
+                            disabled
                             name="remember"
                             v-model:checked="form.is_finished"
                         />
@@ -30,15 +23,15 @@
                         }}</span>
                     </label>
                 </div>
-                <div>
-                    <jet-button
-                        class="ml-4 mt-4 float-right"
-                        :class="{ 'opacity-25': form.processing }"
-                        :disabled="form.processing"
-                    >
-                        Update
-                    </jet-button>
-                </div>
+                <button
+                    v-if="!todo.deleted_at"
+                    class="text-red-600 bg-dark mt-4"
+                    tabindex="-1"
+                    type="button"
+                    @click="destroy"
+                >
+                    Delete Contact
+                </button>
             </form>
         </JetAuthenticationCard>
     </app-layout>
@@ -74,12 +67,26 @@ export default {
     },
     methods: {
         update() {
-            this.form.put(this.route('todos.update', this.todo.id), {
-                onFinish: () => Swal.fire(
-                    'Updated',
-                    'Successfully Updated!',
-                    'success'
-                ),
+            this.form.put(this.route('todos.update', this.todo.id))
+        },
+        destroy() {
+
+            Swal.fire({
+                title: 'Do you want to delete this todo?',
+                showDenyButton: false,
+                showCancelButton: true,
+                confirmButtonText: `Confirm`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    this.$inertia.delete(this.route('todos.destroy', this.todo.id), {
+                        onFinish: () => Swal.fire(
+                            'Deleted',
+                            'Successfully Deleted!',
+                            'success'
+                        ),
+                    })
+                }
             })
         },
     }

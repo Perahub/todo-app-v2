@@ -48,9 +48,11 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Todo $todo)
     {
-        //
+        return Inertia::render('Todos/View', [
+            'todo' => $todo
+        ]);
     }
 
     /**
@@ -86,8 +88,10 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Todo $todo)
     {
-        //
+        $todo->delete();
+
+        return redirect()->route('todos.index');
     }
 }

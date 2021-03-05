@@ -88,6 +88,17 @@
                                                     <inertia-link
                                                         :href="
                                                             route(
+                                                                'todos.show',
+                                                                todo.id
+                                                            )
+                                                        "
+                                                        class="text-indigo-600 hover:text-indigo-900"
+                                                        >View</inertia-link
+                                                    >
+                                                    |
+                                                    <inertia-link
+                                                        :href="
+                                                            route(
                                                                 'todos.edit',
                                                                 todo.id
                                                             )
