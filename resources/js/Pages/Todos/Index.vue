@@ -85,10 +85,15 @@
                                                 <td
                                                     class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
                                                 >
-                                                    <a
-                                                        href="#"
+                                                    <inertia-link
+                                                        :href="
+                                                            route(
+                                                                'todos.edit',
+                                                                todo.id
+                                                            )
+                                                        "
                                                         class="text-indigo-600 hover:text-indigo-900"
-                                                        >Edit</a
+                                                        >Edit</inertia-link
                                                     >
                                                 </td>
                                             </tr>
@@ -123,9 +128,6 @@ export default {
     },
     props: {
         todos: Object,
-    },
-    created() {
-        console.log(this.$props.todos)
     }
 }
 </script>

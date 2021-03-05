@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateTodoRequest;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Todo;
@@ -58,9 +59,11 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Todo $todo)
     {
-        //
+        return Inertia::render('Todos/Edit', [
+            'todo' => $todo
+        ]);
     }
 
     /**
@@ -70,9 +73,11 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateTodoRequest $request, Todo $todo)
     {
-        //
+        $todo->update($request->all());
+
+        return redirect()->route('todos.index');
     }
 
     /**
