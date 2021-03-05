@@ -6,6 +6,7 @@ use App\Http\Requests\UpdateTodoRequest;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Todo;
+use Illuminate\Support\Facades\Auth;
 
 class TodoController extends Controller
 {
@@ -17,7 +18,7 @@ class TodoController extends Controller
     public function index()
     {
         return Inertia::render('Todos/Index', [
-            'todos' => Todo::paginate(10)
+            'todos' => Auth::user()->todos()->paginate(10)
         ]);
     }
 

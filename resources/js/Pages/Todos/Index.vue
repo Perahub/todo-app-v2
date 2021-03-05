@@ -108,11 +108,19 @@
                                                     >
                                                 </td>
                                             </tr>
-
+                                            <tr v-if="todos.data.length === 0">
+                                                <td
+                                                    class="border-t px-6 py-4"
+                                                    colspan="4"
+                                                >
+                                                    No Todos found.
+                                                </td>
+                                            </tr>
                                             <!-- More items... -->
                                         </tbody>
                                     </table>
                                     <Pagination
+                                        v-if="todos.data.length > 0"
                                         class="mt-6"
                                         :links="todos.links"
                                     />
