@@ -27,4 +27,9 @@ class Todo extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function scopeOrderByCreatedAt($query)
+    {
+        $query->orderBy('created_at', 'DESC');
+    }
 }

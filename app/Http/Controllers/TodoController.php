@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTodoRequest;
 use App\Http\Requests\UpdateTodoRequest;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -18,7 +19,7 @@ class TodoController extends Controller
     public function index()
     {
         return Inertia::render('Todos/Index', [
-            'todos' => Auth::user()->todos()->paginate(10)
+            'todos' => Auth::user()->todos()->OrderByCreatedAt()->paginate(10)
         ]);
     }
 
@@ -29,7 +30,7 @@ class TodoController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Todos/Create');
     }
 
     /**
@@ -38,9 +39,11 @@ class TodoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTodoRequest $request)
     {
-        //
+        auth()->user()->todos()->create($request->all());
+
+        return redirect()->route('todos.index');
     }
 
     /**
