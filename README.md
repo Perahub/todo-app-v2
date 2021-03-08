@@ -1,21 +1,48 @@
-# Todo-App v2
+# CakePHP
 
-Create a todo app consist of  `title` and  `is finished`. The other functionalities of the application are the following:
+[![Latest Stable Version](https://poser.pugx.org/cakephp/cakephp/v/stable.svg)](https://packagist.org/packages/cakephp/cakephp)
+[![License](https://poser.pugx.org/cakephp/cakephp/license.svg)](https://packagist.org/packages/cakephp/cakephp)
+[![Bake Status](https://secure.travis-ci.org/cakephp/cakephp.png?branch=master)](https://travis-ci.org/cakephp/cakephp)
+[![Code consistency](https://squizlabs.github.io/PHP_CodeSniffer/analysis/cakephp/cakephp/grade.svg)](https://squizlabs.github.io/PHP_CodeSniffer/analysis/cakephp/cakephp/)
 
--   Can create `todo`
--   Can update specific `todo`
--   Can fetch `todo`
--   Can fetch all `todos`
--   Can delete a specific `todo`
+CakePHP is a rapid development framework for PHP which uses commonly known design patterns like Active Record, Association Data Mapping, Front Controller and MVC.
+Our primary goal is to provide a structured framework that enables PHP users at all levels to rapidly develop robust web applications, without any loss to flexibility.
 
-**Instructions:** 
 
-Using this endpoint, [https://jsonplaceholder.typicode.com/todos](https://jsonplaceholder.typicode.com/), perform the following endpoints and save the data on the todos table.
-Please refer to the documentation of [jsonplaceholder](https://jsonplaceholder.typicode.com/).
+## Some Handy Links
 
-Also create a login page for the users in able to access the page.  **Adding roles of the user is a big plus but not required**.
+[CakePHP](https://cakephp.org) - The rapid development PHP framework
 
-Submit your answer by making a pull request and answer these questions in the pull request details.
-1.  Please elaborate the tech stacks used in this activity and why did you chose it?
-2.  Did you used any software design patterns, paradigms or best practices for developing this application? If yes, why did you used it?
-3.  If you have an extra time, what features do you want to add?
+[CookBook](https://book.cakephp.org) - THE CakePHP user documentation; start learning here!
+
+[API](https://api.cakephp.org) - A reference to CakePHP's classes
+
+[Plugins](https://plugins.cakephp.org) - A repository of extensions to the framework
+
+[The Bakery](https://bakery.cakephp.org) - Tips, tutorials and articles
+
+[Community Center](https://community.cakephp.org) - A source for everything community related
+
+[Training](https://training.cakephp.org) - Join a live session and get skilled with the framework
+
+[CakeFest](https://cakefest.org) - Don't miss our annual CakePHP conference
+
+[Cake Software Foundation](https://cakefoundation.org) - Promoting development related to CakePHP
+
+
+## Get Support!
+
+[#cakephp](https://webchat.freenode.net/?channels=#cakephp) on irc.freenode.net - Come chat with us, we have cake
+
+[Google Group](https://groups.google.com/group/cake-php) - Community mailing list and forum
+
+[GitHub Issues](https://github.com/cakephp/cakephp/issues) - Got issues? Please tell us!
+
+[Roadmaps](https://github.com/cakephp/cakephp/wiki#roadmaps) - Want to contribute? Get involved!
+
+
+## Contributing
+
+[CONTRIBUTING.md](CONTRIBUTING.md) - Quick pointers for contributing to the CakePHP project
+
+[CookBook "Contributing" Section (2.x)](https://book.cakephp.org/2.0/en/contributing.html) [(3.x)](https://book.cakephp.org/3.0/en/contributing.html) - Version-specific details about contributing to the project
