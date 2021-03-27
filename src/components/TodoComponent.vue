@@ -1,18 +1,36 @@
 <template lang="pug">
 .wrapper
-  h1 Your Todos
+  h1 Create a Todo
+  .todo-create-container
+    textarea(v-model="newTodoText")
+    button(v-on:click="createTodo") Create
   hr
+  h1 Your Todos
   p.error(v-if="error") {{ error }}
-  .todos-container#sasa
+  .todos-container
     .todo(
       v-for="todo, index in todos"
       v-bind:item="todo"
       v-bind:index="index"
       v-bind:key="todo.id"
       v-bind:completed="todo.completed"
+      v-on:click="setActiveTextArea(todo)"
+      tabindex="1"
     )
-      input(type="checkbox" v-bind:checked="todo.completed" v-on:click="todo.completed = !todo.completed")
-      textarea(v-on:click="activeTextArea = todo.id" v-bind:readonly="activeTextArea != todo.id") {{ todo.title }}
+      input(
+        type="checkbox"
+        v-bind:checked="todo.completed"
+        v-bind:disabled="todo.id != activeTextArea.id"
+        v-model="todo.completed"
+      )
+      textarea(
+        v-bind:readonly="todo.id != activeTextArea.id"
+        v-model="todo.title"
+      ) {{ todo.title }}
+      .options-container(v-if="activeTextArea.id == todo.id")
+        button View
+        button(v-on:click="editTodo(todo)") Update
+        button Delete
 </template>
 
 <script>
@@ -20,22 +38,73 @@ import TodoService from '../services/TodoService.js'
 
 export default {
   name: 'TodoComponent',
+  props: {
+    user: Object
+  },
   data() {
     return {
       todos: [],
       error: '',
-      activeTextArea: -1, 
+      activeTextArea: {
+        id: -1,
+        title: '',
+        completed: true
+      },
+      newTodoText: '',
     }
   },
-  async created() {
-    try {
-      this.todos = await TodoService.fetchAll();
-    } catch(err) {
-      this.error = err;
-    }
+  created() {
+    this.loadTodos();
   },
   methods: {
-    
+    setActiveTextArea(todo) {
+      console.log(this.todos);
+      if(this.activeTextArea.id != todo.id) {
+        this.revertChanges(this.todos[this.todos.findIndex(x => x.id === this.activeTextArea.id)]);
+
+        this.activeTextArea = {
+          id: todo.id,
+          title: todo.title,
+          completed: todo.completed
+        };
+      }  
+    },
+    revertChanges(todo) {
+      if(todo) {
+        todo.title = this.activeTextArea.title;
+        todo.completed = this.activeTextArea.completed;
+      }
+    },
+    async loadTodos() {
+      try {
+        this.todos = await TodoService.getAllByUser(this.user.id);
+      } catch(err) {
+        this.error = err;
+      }
+    },
+    async createTodo() {
+      try {
+        const todo = await TodoService.addTodoForUser(this.user.id, this.newTodoText);
+        this.todos.push(todo)
+      } catch(err) {
+        this.error = err;
+      }
+    },
+    async editTodo(todo) {
+      try {
+        this.todos = await TodoService.update(todo, this.todos);
+        
+        this.activeTextArea = {
+          id: -1,
+          title: '',
+          completed: true
+        }
+        //this.todos[this.todos.findIndex(x => x.id === updatedTodo.id)] = updatedTodo;
+        //console.log(updatedTodo)
+      } catch(err) {
+        this.error = err;
+      }
+    }
   }
 }
 </script>
@@ -44,6 +113,7 @@ export default {
 <style lang="stylus" scoped>
 textarea[readonly]
   color grey
+
 .todo[completed="true"]
   border 3px solid green
 </style>
