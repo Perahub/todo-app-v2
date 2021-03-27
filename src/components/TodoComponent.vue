@@ -30,7 +30,7 @@
       .options-container(v-if="activeTextArea.id == todo.id")
         button View
         button(v-on:click="editTodo(todo)") Update
-        button Delete
+        button(v-on:click="deleteTodo(todo.id)") Delete
 </template>
 
 <script>
@@ -86,6 +86,12 @@ export default {
       try {
         const todo = await TodoService.addTodoForUser(this.user.id, this.newTodoText);
         this.todos.push(todo)
+
+        this.activeTextArea = {
+          id: -1,
+          title: '',
+          completed: true
+        }
       } catch(err) {
         this.error = err;
       }
@@ -99,9 +105,25 @@ export default {
           title: '',
           completed: true
         }
-        //this.todos[this.todos.findIndex(x => x.id === updatedTodo.id)] = updatedTodo;
-        //console.log(updatedTodo)
       } catch(err) {
+        this.error = err;
+      }
+    },
+    async deleteTodo(id, todos) {
+      try {
+        await TodoService.delete(id, todos);
+
+        this.todos.splice(
+          this.todos.findIndex(x => x.id === id),
+          1
+        );
+
+        this.activeTextArea = {
+          id: -1,
+          title: '',
+          completed: true
+        }
+      } catch (err) {
         this.error = err;
       }
     }

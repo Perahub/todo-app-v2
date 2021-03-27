@@ -46,6 +46,14 @@ class TodoService {
 
         return todos;
     }
+
+    static async delete(id) {
+        const requestOptions = {
+            method: 'DELETE',
+        }
+
+        await fetch(url + `/${id}`, requestOptions);
+    }
 }
 
 export default TodoService;
