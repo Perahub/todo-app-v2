@@ -5,11 +5,16 @@ class TodoService {
     static async getAllByUser(id) {
         const response = await fetch(url + `?userId=${id}`);
         const todos = await response.json();
-        console.log(todos);
         return todos;
     }
 
-    static async addTodoForUser(id, text) {
+    static async addTodoForUser(id, text, todos) {
+        const maxId = await Math.max.apply(Math, todos.map(todo => {
+            return todo.id;
+        }));
+
+        console.log(maxId);
+
         const requestOptions = {
             method: 'POST',
             body: JSON.stringify({
@@ -24,7 +29,12 @@ class TodoService {
 
         const response = await fetch(url, requestOptions);
         const todo = await response.json();
-        return todo;
+
+        todo.id = maxId + 1;
+        todos.push(todo)
+
+        console.log(todo)
+        return todos;
     }
 
     static async update(todo, todos) {

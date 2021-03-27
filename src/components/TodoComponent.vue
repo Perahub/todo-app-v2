@@ -15,7 +15,6 @@
       v-bind:key="todo.id"
       v-bind:completed="todo.completed"
       v-on:click="setActiveTextArea(todo)"
-      tabindex="1"
     )
       input(
         type="checkbox"
@@ -84,8 +83,7 @@ export default {
     },
     async createTodo() {
       try {
-        const todo = await TodoService.addTodoForUser(this.user.id, this.newTodoText);
-        this.todos.push(todo)
+        this.todos = await TodoService.addTodoForUser(this.user.id, this.newTodoText, this.todos);
 
         this.activeTextArea = {
           id: -1,
